@@ -102,11 +102,11 @@ public class TicTacToeBoardTest {
         assertEquals(2, board.getMarksPlaced()); 
         assertEquals(Mark.X, board.getMarkAtSquare(0, 1));           
         
-        board.removeMarkFromPlace(1, 1);
+        board.removeMarkFromSquare(1, 1);
         assertEquals(1, board.getMarksPlaced()); 
         assertEquals(Mark.EMPTY, board.getMarkAtSquare(1, 1));
         
-        board.removeMarkFromPlace(0, 0);
+        board.removeMarkFromSquare(0, 0);
         assertEquals(1, board.getMarksPlaced()); 
         assertEquals(Mark.EMPTY, board.getMarkAtSquare(0, 0));        
     }
@@ -239,6 +239,47 @@ public class TicTacToeBoardTest {
         System.out.println(board.getBoardAsString());
         assertEquals(GameState.RUNNING, board.getGameState());
         
+        board.placeMarkOnSquare(Mark.X, 0, 1);
+        System.out.println(board.getBoardAsString());        
+        assertEquals(GameState.RUNNING, board.getGameState());
+        
+        board.placeMarkOnSquare(Mark.O, 1, 0);
+        System.out.println(board.getBoardAsString());        
+        assertEquals(GameState.RUNNING, board.getGameState());
+        
+        board.placeMarkOnSquare(Mark.X, 1, 1);
+        System.out.println(board.getBoardAsString());        
+        assertEquals(GameState.RUNNING, board.getGameState());
+        
+        board.placeMarkOnSquare(Mark.O, 2, 1);
+        System.out.println(board.getBoardAsString());        
+        assertEquals(GameState.RUNNING, board.getGameState());
+        
+        board.placeMarkOnSquare(Mark.X, 2, 0);
+        System.out.println(board.getBoardAsString());        
+        assertEquals(GameState.RUNNING, board.getGameState());
+        
+        board.placeMarkOnSquare(Mark.O, 0, 2);        
+        System.out.println(board.getBoardAsString());    
+        assertEquals(GameState.RUNNING, board.getGameState());   
+        
+        board.placeMarkOnSquare(Mark.X, 1, 2);
+        System.out.println(board.getBoardAsString());        
+        assertEquals(GameState.RUNNING, board.getGameState());  
+        
+        board.placeMarkOnSquare(Mark.O, 2, 2);        
+        System.out.println(board.getBoardAsString());    
+        assertEquals(GameState.TIE, board.getGameState());        
+    }
+    
+    @Test
+    public void testTie2() {
+        System.out.println("TestTie2");
+        TicTacToeBoard board = new TicTacToeBoard(DEFAULT_SIZE);
+        board.placeMarkOnSquare(Mark.O, 0, 0);
+        System.out.println(board.getBoardAsString());
+        assertEquals(GameState.RUNNING, board.getGameState());
+        
         board.placeMarkOnSquare(Mark.X, 0, 2);
         System.out.println(board.getBoardAsString());        
         assertEquals(GameState.RUNNING, board.getGameState());
@@ -270,6 +311,31 @@ public class TicTacToeBoardTest {
         board.placeMarkOnSquare(Mark.O, 2, 2);        
         System.out.println(board.getBoardAsString());    
         assertEquals(GameState.TIE, board.getGameState());        
+    }
+    
+    @Test
+    public void testGetCopyOfBoard() {
+        System.out.println("TestGetCopyOfBoard");
+        TicTacToeBoard board = new TicTacToeBoard(DEFAULT_SIZE);        
+        
+        board.placeMarkOnSquare(Mark.O, 1, 2);        
+        board.placeMarkOnSquare(Mark.X, 2, 2);
+        assertEquals(2, board.getMarksPlaced());
+        
+        TicTacToeBoard copy = board.getCopyOfBoard();
+
+        assertEquals(Mark.O, copy.getMarkAtSquare(1, 2));         
+        assertEquals(Mark.X, copy.getMarkAtSquare(2, 2));
+        
+        for (int i = 0; i < DEFAULT_SIZE; i++) {
+            assertEquals(Mark.EMPTY, copy.getMarkAtSquare(i, 0));
+            assertEquals(Mark.EMPTY, copy.getMarkAtSquare(0, 1));            
+        }
+        
+        assertEquals(Mark.EMPTY, copy.getMarkAtSquare(1, 1));
+        
+        assertEquals(GameState.RUNNING, copy.getGameState());
+        
     }
 
 }

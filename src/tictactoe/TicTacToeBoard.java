@@ -79,7 +79,7 @@ public class TicTacToeBoard {
      * @param column 
      * @throws IllegalArgumentException if row or column is outside the dimensions of the board
      */
-    public void removeMarkFromPlace(int row, int column) {
+    public void removeMarkFromSquare(int row, int column) {
         checkDimension(row, column);
         if (board[row][column] == Mark.EMPTY) {
             return;
@@ -120,7 +120,6 @@ public class TicTacToeBoard {
             }
             if (allSameOnThisRow) {
                 if (firstMark == Mark.X) {
-                    System.out.println("X won at row " + row);
                     return GameState.X_WON;
                 } else {
                     return GameState.O_WON;
@@ -142,7 +141,6 @@ public class TicTacToeBoard {
             }
             if (allSameOnThisColumn) {
                 if (firstMark == Mark.X) {
-                    System.out.println("X won at column " + column);
                     return GameState.X_WON;
                 } else {
                     return GameState.O_WON;
@@ -220,5 +218,14 @@ public class TicTacToeBoard {
     public int getMarksPlaced() {
         return marksPlaced;
     }
-
+    
+    public TicTacToeBoard getCopyOfBoard() {
+        TicTacToeBoard copy = new TicTacToeBoard(size);
+        for (int row = 0; row < size; row++) {
+            for (int column = 0; column < size; column++) {
+                copy.placeMarkOnSquare(board[row][column], row, column);
+            }
+        }
+        return copy;
+    }
 }
