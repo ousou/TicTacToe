@@ -9,6 +9,10 @@ import tictactoe.TicTacToeBoard;
 /**
  * An AI using the MinMax-algorithm.
  *
+ * This implementation doesn't prune the search tree and does the search
+ * all the way to the end of the game, so it doesn't work in real-time for
+ * larger boards than 3x3.
+ * 
  * @author Sebastian Björkqvist
  */
 public class MinMaxAI implements AIPlayer {

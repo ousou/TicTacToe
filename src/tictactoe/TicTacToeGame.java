@@ -49,6 +49,10 @@ public class TicTacToeGame {
         }
         return false;
     }
+    
+    public boolean placeMarkOnSquare(Square square) {
+        return placeMarkOnSquare(square.row, square.column);
+    }
 
     private void switchCurrentPlayer() {
         if (playerInTurn == Mark.X) {
