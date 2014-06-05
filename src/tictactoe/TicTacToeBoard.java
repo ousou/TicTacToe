@@ -1,5 +1,8 @@
 package tictactoe;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author Sebastian Björkqvist
@@ -71,6 +74,10 @@ public class TicTacToeBoard {
         }
         return false;
     }
+    
+    public boolean placeMarkOnSquare(Mark mark, Square square) {
+        return placeMarkOnSquare(mark, square.row, square.column);
+    }
 
     /**
      * Removes the mark from the given square.
@@ -87,6 +94,10 @@ public class TicTacToeBoard {
         board[row][column] = Mark.EMPTY;
         marksPlaced--;
     }
+    
+    public void removeMarkFromSquare(Square square) {
+        removeMarkFromSquare(square.row, square.column);
+    }    
 
     private void checkDimension(int x, int y) throws IllegalArgumentException {
         if (x < 0 || x >= size) {
@@ -227,5 +238,17 @@ public class TicTacToeBoard {
             }
         }
         return copy;
+    }
+    
+    public List<Square> getAvailableSquares() {
+        List<Square> availableSquares = new ArrayList<>();
+        for (int row = 0; row < size; row++) {
+            for (int column = 0; column < size; column++) {
+                if (this.board[row][column] == Mark.EMPTY) {
+                    availableSquares.add(new Square(row, column));
+                }
+            }
+        }        
+        return availableSquares;
     }
 }

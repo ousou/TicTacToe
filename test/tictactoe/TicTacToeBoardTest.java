@@ -337,5 +337,21 @@ public class TicTacToeBoardTest {
         assertEquals(GameState.RUNNING, copy.getGameState());
         
     }
+    
+    @Test
+    public void testGetAvailableSquares() {
+        System.out.println("TestGetAvailableSquares");
+        TicTacToeBoard board = new TicTacToeBoard(DEFAULT_SIZE);      
+        
+        assertEquals(9, board.getAvailableSquares().size());
+        
+        board.placeMarkOnSquare(Mark.O, 1, 2);        
+        assertEquals(8, board.getAvailableSquares().size());
+        assertFalse(board.getAvailableSquares().contains(new Square(1,2)));
+        board.placeMarkOnSquare(Mark.X, 2, 2);        
+        assertEquals(7, board.getAvailableSquares().size());
+        assertFalse(board.getAvailableSquares().contains(new Square(1,2)));   
+        assertFalse(board.getAvailableSquares().contains(new Square(2,2)));        
+    }
 
 }
