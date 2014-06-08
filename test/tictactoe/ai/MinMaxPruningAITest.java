@@ -10,12 +10,9 @@ import tictactoe.TicTacToeBoard;
  *
  * @author Sebastian Björkqvist
  */
-public class MinMaxAITest {
+public class MinMaxPruningAITest {
 
     private static final int DEFAULT_SIZE = 3;    
-    
-    public MinMaxAITest() {
-    }
 
     @Test
     public void testWhenOnlyOnePlaceToMove() {
@@ -30,7 +27,7 @@ public class MinMaxAITest {
         board.placeMarkOnSquare(Mark.X, 2,0);
         board.placeMarkOnSquare(Mark.O, 0,2);
         
-        MinMaxAI ai = new MinMaxAI(Mark.X);
+        MinMaxPruningAI ai = new MinMaxPruningAI(Mark.X);
         
         Square move = ai.getMove(board);
         
@@ -51,7 +48,7 @@ public class MinMaxAITest {
         board.placeMarkOnSquare(Mark.O, 1,0);
         board.placeMarkOnSquare(Mark.X, 2,0);
         
-        MinMaxAI ai = new MinMaxAI(Mark.O);
+        MinMaxPruningAI ai = new MinMaxPruningAI(Mark.O);
         
         Square move = ai.getMove(board);
         
@@ -70,7 +67,7 @@ public class MinMaxAITest {
         board.placeMarkOnSquare(Mark.O, 0,1);
         board.placeMarkOnSquare(Mark.X, 0,0);
         
-        MinMaxAI ai = new MinMaxAI(Mark.O);
+        MinMaxPruningAI ai = new MinMaxPruningAI(Mark.O);
         
         Square move = ai.getMove(board);
         
@@ -88,7 +85,7 @@ public class MinMaxAITest {
         board.placeMarkOnSquare(Mark.X, 1,1);
         board.placeMarkOnSquare(Mark.O, 0,0);
         
-        MinMaxAI ai = new MinMaxAI(Mark.X);
+        MinMaxPruningAI ai = new MinMaxPruningAI(Mark.X);
         
         Square move = ai.getMove(board);
         
@@ -106,7 +103,7 @@ public class MinMaxAITest {
         board.placeMarkOnSquare(Mark.X, 1,0);
         board.placeMarkOnSquare(Mark.O, 0,1);
         
-        MinMaxAI ai = new MinMaxAI(Mark.X);
+        MinMaxPruningAI ai = new MinMaxPruningAI(Mark.X);
         
         Square move = ai.getMove(board);
         
@@ -123,7 +120,7 @@ public class MinMaxAITest {
         board.placeMarkOnSquare(Mark.O, 0,2);
         board.placeMarkOnSquare(Mark.X, 1,1);
         
-        MinMaxAI ai = new MinMaxAI(Mark.O);
+        MinMaxPruningAI ai = new MinMaxPruningAI(Mark.O);
         
         Square move = ai.getMove(board);
         
@@ -138,9 +135,11 @@ public class MinMaxAITest {
         // Done just to check how long this takes
         TicTacToeBoard board = new TicTacToeBoard(DEFAULT_SIZE);
         
-        MinMaxAI ai = new MinMaxAI(Mark.X);
+        MinMaxPruningAI ai = new MinMaxPruningAI(Mark.X);
         
         Square move = ai.getMove(board);
-        System.out.println("Number of evaluations: " + ai.getNumberOfEvaluations());        
+        System.out.println("Number of evaluations: " + ai.getNumberOfEvaluations());
     }
+
+
 }

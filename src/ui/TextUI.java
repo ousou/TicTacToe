@@ -6,7 +6,7 @@ import tictactoe.Mark;
 import tictactoe.Square;
 import tictactoe.TicTacToeGame;
 import tictactoe.ai.AIPlayer;
-import tictactoe.ai.MinMaxAI;
+import tictactoe.ai.MinMaxPruningAI;
 
 /**
  * Text user interface for tic-tac-toe.
@@ -17,7 +17,7 @@ public class TextUI implements UI {
 
     private TicTacToeGame game;
     private final Scanner scanner;
-    private final static int BOARD_SIZE = 3;
+    private final static int BOARD_SIZE = 4;
     private Mark aiMark;
     private AIPlayer aiPlayer;
 
@@ -122,7 +122,7 @@ public class TextUI implements UI {
         System.out.print("Play against AI (Y/N)? ");
         String answer = scanner.nextLine();
         if (answer.equalsIgnoreCase("Y") || answer.equalsIgnoreCase("YES")) {
-            aiPlayer = new MinMaxAI();
+            aiPlayer = new MinMaxPruningAI();
             System.out.print("Pick your mark (X/O), X starts: ");
             answer = scanner.nextLine();            
             if (answer.equalsIgnoreCase("X") || answer.equalsIgnoreCase("YES")) {

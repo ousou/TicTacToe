@@ -7,37 +7,32 @@ import tictactoe.Square;
 import tictactoe.TicTacToeBoard;
 
 /**
- * An AI using the MinMax-algorithm.
  *
- * This implementation doesn't prune the search tree and does the search
- * all the way to the end of the game, so it doesn't work in real-time for
- * larger boards than 3x3.
- * 
  * @author Sebastian Björkqvist
  */
-public class MinMaxAI extends AbstractMinMaxAI {
+public class MinMaxPruningAI extends AbstractMinMaxAI {
 
     private int numberOfEvaluations;
     
-    public MinMaxAI(Mark mark) {
+    public MinMaxPruningAI(Mark mark) {
         super(mark);
     }
 
-    public MinMaxAI() {
-        super();
+    public MinMaxPruningAI() {
     }
 
     @Override
     public Square getMove(TicTacToeBoard board) {
         numberOfEvaluations = 0;
-        return evaluateBoard(board, mark).square;
-    }    
+        return evaluateBoard(board, mark, MIN_VALUE, MAX_VALUE).square;
+    }
 
     public int getNumberOfEvaluations() {
         return numberOfEvaluations;
     }
     
-    private SquareValue evaluateBoard(TicTacToeBoard board, Mark markToPlace) {
+    private SquareValue evaluateBoard(TicTacToeBoard board, Mark markToPlace
+            , int alpha, int beta) {
         GameState currentState = board.getGameState();
         numberOfEvaluations++;
 //        System.out.println(board.getBoardAsString());        
@@ -49,10 +44,10 @@ public class MinMaxAI extends AbstractMinMaxAI {
         SquareValue bestSquareValue;
         // Maximize
         if (markToPlace == Mark.X) {
-            bestSquareValue = new SquareValue(null, MIN_VALUE);
+            bestSquareValue = new SquareValue(null, alpha);
             for (Square s : availableSquares) {
                 board.placeMarkOnSquare(Mark.X, s);
-                SquareValue evaluation = evaluateBoard(board, Mark.O);
+                SquareValue evaluation = evaluateBoard(board, Mark.O, alpha, beta);
 //                System.out.println("Evaluation: " + evaluation);                
                 board.removeMarkFromSquare(s);
                 /* If the evaluation square is null, it means
@@ -64,25 +59,34 @@ public class MinMaxAI extends AbstractMinMaxAI {
                         (evaluation.value >= bestSquareValue.value && 
                         evaluation.square == null)) {
                     bestSquareValue = new SquareValue(s, evaluation.value);
+                    alpha = evaluation.value;
                 }
+                // Beta cut-off;
+                if (beta <= alpha) {
+                    break;
+                }
+                
             }
         } else { // Minimize
-            bestSquareValue = new SquareValue(null, MAX_VALUE);
+            bestSquareValue = new SquareValue(null, beta);
             for (Square s : availableSquares) {
                 board.placeMarkOnSquare(Mark.O, s);
-                SquareValue evaluation = evaluateBoard(board, Mark.X);
+                SquareValue evaluation = evaluateBoard(board, Mark.X, alpha, beta);
 //                System.out.println("Evaluation: " + evaluation);
                 board.removeMarkFromSquare(s);
                 if (evaluation.value < bestSquareValue.value ||
                         (evaluation.value <= bestSquareValue.value && 
                         evaluation.square == null)) {
                     bestSquareValue = new SquareValue(s, evaluation.value);
+                    beta = evaluation.value;
                 }
+                // Alpha cut-off;
+                if (beta <= alpha) {
+                    break;
+                }                
             }
         }
 
         return bestSquareValue;
-    }
-
-    
+    }    
 }
