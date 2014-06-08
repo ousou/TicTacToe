@@ -17,7 +17,7 @@ public class TextUI implements UI {
 
     private TicTacToeGame game;
     private final Scanner scanner;
-    private final static int BOARD_SIZE = 4;
+    private final static int BOARD_SIZE = 3;
     private Mark aiMark;
     private AIPlayer aiPlayer;
 
@@ -56,8 +56,8 @@ public class TextUI implements UI {
                     game.placeMarkOnSquare(row, column);
                     markPlaced = true;
                 } else {
-                    System.out.println("There is already a mark on row " + (row + 1)
-                            + ", column " + (column + 1));
+                    System.out.println("There is already a mark on row " + row
+                            + ", column " + column);
                 }
             }
         }
